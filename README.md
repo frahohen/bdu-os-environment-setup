@@ -1,6 +1,6 @@
 # bdu-os-environment-setup
 
-BasicDevelopmentUtilities - OS Environment Setup: A basic automated VPS environment setup.
+A basic automated VPS environment setup for debian 10
 
 # How to install
 
