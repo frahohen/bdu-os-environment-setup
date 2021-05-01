@@ -1,6 +1,6 @@
 # bdu-os-environment-setup
 
-A basic automated VPS environment setup for Debian 10.9.0 (amd64) - netinst
+A basic automated VPS environment setup for Debian 10
 
 Currently included:
 
@@ -17,3 +17,7 @@ su root bash -c "apt-get install unzip && wget https://github.com/frahohen/bdu-o
 ```
 su root bash -c "apt-get install -y git-all && git clone https://github.com/frahohen/bdu-os-environment-setup.git && cd bdu-os-environment-setup && bash setup.sh"
 ```
+
+# Requirements
+
+	* debian-10.9.0-amd64-netinst.iso with "standard system utilities" installed
