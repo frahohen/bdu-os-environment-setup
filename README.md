@@ -8,8 +8,12 @@ Currently included:
 
 # How to install
 
-1. Login as root: "su root"
-2. Install Git: "apt-get install -y git-all"
-3. Clone the repository to a folder of your choice: "git clone https://github.com/frahohen/bdu-os-environment-setup.git"
-4. Navigate into the repository: "cd bdu-os-environment-setup"
-5. Execute the setup.sh: "bash setup.sh"
+## Install environment with zipped file of the repository project
+```
+su root bash -c "apt-get install unzip && wget https://github.com/frahohen/bdu-os-environment-setup/archive/master.zip && unzip master.zip && rm master.zip && cd bdu-os-environment-setup-master && bash setup.sh"
+```
+
+## Install environment with a clone of the Git repository
+```
+su root bash -c "apt-get install -y git-all && git clone https://github.com/frahohen/bdu-os-environment-setup.git && cd bdu-os-environment-setup && bash setup.sh"
+```

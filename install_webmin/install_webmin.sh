@@ -1,4 +1,4 @@
-#!/bin/bash
+y#!/bin/bash
 # General
 LOGGER="./utils/print_log.sh"
 # Repository
@@ -26,6 +26,6 @@ apt-key add jcameron-key.asc
 bash "${LOGGER_UTIL}" info "Update and install webmin"
 apt-get install -y apt-transport-https
 apt-get clean all
-apt-get update
-apt-get upgrade
+apt-get update -y
+apt-get upgrade -y
 apt-get install -y webmin
