@@ -4,7 +4,7 @@ A basic automated VPS environment setup for Debian 10
 
 Currently included:
 
-	* Webmin
+* Webmin
 
 # How to install
 
@@ -20,4 +20,4 @@ su root bash -c "apt-get install -y git-all && git clone https://github.com/frah
 
 # Requirements
 
-	* debian-10.9.0-amd64-netinst.iso with "standard system utilities" installed
+* debian-10.9.0-amd64-netinst.iso with "standard system utilities" installed
