@@ -1,4 +1,4 @@
-y#!/bin/bash
+#!/bin/bash
 # General
 LOGGER="./utils/print_log.sh"
 # Repository
