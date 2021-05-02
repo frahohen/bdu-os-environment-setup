@@ -11,7 +11,7 @@ then
 else
 	bash "${LOGGER}" info "Add repository \"${REPO_WEBMIN}\" to file \"${FILE_SOURCE_LIST}\""
 	echo "" >> "${FILE_SOURCE_LIST}"
-	echo "#Webmin APT repository" >> "${FILE_SOURCE_LIST}"
+	echo "#Webmin repository" >> "${FILE_SOURCE_LIST}"
 	echo "${REPO_WEBMIN}" >> "${FILE_SOURCE_LIST}"
 fi
 

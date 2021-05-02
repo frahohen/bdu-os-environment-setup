@@ -5,6 +5,7 @@ A basic automated VPS environment setup for Debian 10
 Currently included:
 
 * Webmin
+* Docker
 
 # How to install
 
