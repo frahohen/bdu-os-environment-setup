@@ -20,7 +20,7 @@ echo "#Docker repository" >> "${FILE_SOURCE_LIST}"
 echo "${REPO_DOCKER}" | tee "${FILE_SOURCE_LIST}" > /dev/null
 
 bash "${LOGGER}" info "Re-index and fetch all available packages"
-apt-get update
+apt-get update -y
 
 bash "${LOGGER_UTIL}" info "Install docker"
-apt-get install docker-ce docker-ce-cli containerd.io
+apt-get install -y docker-ce docker-ce-cli containerd.io
