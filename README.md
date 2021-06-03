@@ -6,6 +6,7 @@ Currently included:
 
 * Webmin
 * Docker
+* Docker-Compose
 
 # How to install
 
