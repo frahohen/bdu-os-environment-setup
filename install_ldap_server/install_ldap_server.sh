@@ -14,13 +14,13 @@ bash "${LOGGER}" info "${LDAP_SERVER} Install expect scripting language"
 apt-get install expect -y
 
 bash "${LOGGER}" info "${LDAP_SERVER} Check if slapd and libpam-ldapd are installed"
-SLAPD_INSTALLED=$(su root -c "dpkg -l | grep slapd")
-LIBPAM_LDAPD_INSTALLED=$(su root -c "dpkg -l | grep libpam-ldapd")
+SLAPD_INSTALLED=$(dpkg -l | grep slapd)
+LIBPAM_LDAPD_INSTALLED=$(dpkg -l | grep libpam-ldapd)
 
-if [ -z "$(SLAPD_INSTALLED)"]
+if [ -z "${SLAPD_INSTALLED}"]
 then 
     # slapd not installed => check if libpam-ldapd is installed
-    if [ -z "$(LIBPAM_LDAPD_INSTALLED)"]
+    if [ -z "${LIBPAM_LDAPD_INSTALLED}"]
     then
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd not installed => do fresh installation
@@ -34,7 +34,7 @@ then
     fi
 else
     # slapd installed => check if libpam-ldapd is installed
-    if [ -z "$(LIBPAM_LDAPD_INSTALLED)"]
+    if [ -z "${LIBPAM_LDAPD_INSTALLED}"]
     then
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd not installed => remove package and reinstall slapd and libpam-ldapd
