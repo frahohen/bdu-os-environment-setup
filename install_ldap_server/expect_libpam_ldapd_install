@@ -10,16 +10,16 @@ send "dc=ldap,dc=frahohen,dc=at\r"
 expect "LDAP version to use:"
 send "3\r"
 
-expect "Does the LDAP database require login?"
-send "no\r"
+#expect "Does the LDAP database require login?"
+#send "no\r"
 
-expect "LDAP administrative account:"
-send "cn=admin,dc=ldap,dc=frahohen,dc=at\r"
+#expect "LDAP administrative account:"
+#send "cn=admin,dc=ldap,dc=frahohen,dc=at\r"
 
-expect "LDAP administrative password:"
-send "admin\r"
+#expect "LDAP administrative password:"
+#end "admin\r"
 
-expect "Override local changes to /etc/pam.d/common-*?"
-send "yes\r"
+#expect "Override local changes to /etc/pam.d/common-*?"
+#send "yes\r"
 
 expect eof
