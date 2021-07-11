@@ -8,7 +8,7 @@ expect "Distinguished name of the search base:"
 send "dc=ldap,dc=frahohen,dc=at\r"
 
 expect "LDAP version to use:"
-send "3\r"
+#send "3\r"
 
 #expect "Does the LDAP database require login?"
 #send "no\r"
