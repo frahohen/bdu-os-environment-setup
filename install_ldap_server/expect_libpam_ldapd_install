@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-spawn apt-get install libpam-ldapd -y
+spawn su root -c "apt-get install libpam-ldapd -y"
 expect "LDAP server URI:"
 send "ldap://127.0.0.1:389/\r"
 

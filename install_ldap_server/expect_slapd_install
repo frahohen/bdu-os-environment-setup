@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-spawn apt-get install slapd -y
+spawn su root -c "apt-get install slapd -y"
 expect "Administrator password:"
 send "admin\r"
 
