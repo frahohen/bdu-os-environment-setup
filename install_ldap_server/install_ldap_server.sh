@@ -3,8 +3,10 @@
 LOGGER="./utils/print_log.sh"
 LDAP_SERVER="LDAP Server -"
 
-# Change input windows to normal text line inputs
+# change input windows to normal text line inputs
 export DEBIAN_FRONTEND=readline
+# allow execution of dpkg
+export PATH=$PATH:/usr/sbin
 
 bash "${LOGGER}" info "${LDAP_SERVER} Re-index and fetch all available packages"
 apt-get update -y
@@ -22,8 +24,8 @@ then
     then
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd not installed => do fresh installation
-        ./expect_slapd_install
-        ./expect_libpam_ldapd_install
+        ./install_ldap_server/expect_slapd_install
+        ./install_ldap_server/expect_libpam_ldapd_install
     else
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd
