@@ -1,0 +1,11 @@
+Nutzer
+chown -R root:root /var/run/nslcd/
+chown -R root:nslcd /var/run/nslcd/
+
+service nscd stop
+service nslcd stop
+
+stop via 
+
+systemctl stop nslcd
+stop service sshd

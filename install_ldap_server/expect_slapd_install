@@ -1,0 +1,10 @@
+#!/usr/bin/expect
+
+spawn apt-get install slapd -y
+expect "Administrator password:"
+send "admin\r"
+
+expect "Confirm password:"
+send "admin\r"
+
+expect eof

@@ -1,0 +1,25 @@
+#!/usr/bin/expect
+
+spawn apt-get install libpam-ldapd -y
+expect "LDAP server URI:"
+send "ldap://127.0.0.1:389/\r"
+
+expect "Distinguished name of the search base:"
+send "dc=ldap,dc=frahohen,dc=at\r"
+
+expect "LDAP version to use:"
+send "3\r"
+
+expect "Does the LDAP database require login?"
+send "no\r"
+
+expect "LDAP administrative account:"
+send "cn=admin,dc=ldap,dc=frahohen,dc=at\r"
+
+expect "LDAP administrative password:"
+send "admin\r"
+
+expect "Override local changes to /etc/pam.d/common-*?"
+send "yes\r"
+
+expect eof
