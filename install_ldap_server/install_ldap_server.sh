@@ -14,8 +14,8 @@ bash "${LOGGER}" info "${LDAP_SERVER} Install expect scripting language"
 apt-get install expect -y
 
 bash "${LOGGER}" info "${LDAP_SERVER} Check if slapd and libpam-ldapd are installed"
-SLAPD_INSTALLED=$(dpkg -l | grep slapd)
-LIBPAM_LDAPD_INSTALLED=$(dpkg -l | grep libpam-ldapd)
+SLAPD_INSTALLED=$(su root -c "dpkg -l | grep slapd")
+LIBPAM_LDAPD_INSTALLED=$(su root -c "dpkg -l | grep libpam-ldapd")
 
 if [ -z "$(SLAPD_INSTALLED)"]
 then 
