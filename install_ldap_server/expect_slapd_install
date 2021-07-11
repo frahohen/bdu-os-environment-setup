@@ -1,9 +1,10 @@
 #!/usr/bin/expect
 
 spawn su root -c "apt-get install slapd -y"
+
+# LDAP administrator password for user "admin"
 expect "Administrator password:"
 send "admin\r"
-
 expect "Confirm password:"
 send "admin\r"
 

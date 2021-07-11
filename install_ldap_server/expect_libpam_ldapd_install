@@ -1,14 +1,39 @@
 #!/usr/bin/expect
 
 spawn su root -c "apt-get install libpam-ldapd -y"
+
+# ------------------------------------------------
+# --Configuration nslcd---------------------------
+# ------------------------------------------------
 expect "LDAP server URI:"
+# LDAP server URI formats:
+#   ldap://<hostname_or_IP_address>:<port>/
+#   ldaps://
+#   ldapi://
 send "ldap://127.0.0.1:389/\r"
 
-expect "Distinguished name of the search base:"
+expect "LDAP server search base:"
+# example:
+#   "example.net" results in "dc=example,dc=net" 
 send "dc=ldap,dc=frahohen,dc=at\r"
 
-expect "LDAP version to use:"
-#send "3\r"
+# ------------------------------------------------
+# --Configuration libnss-ldapd--------------------
+# ------------------------------------------------
+expect "Name services to configure:"
+# LDAP lookup options found in /etc/nsswitch.conf
+#   1. passwd
+#   2. group
+#   3. shadow
+#   4. hosts 
+#   5. networks
+#   6. ethers
+#   7. protocols
+#   8. services
+#   9. rpc
+#   10. netgroup
+#   11. aliases
+send "1 2 3\r"
 
 #expect "Does the LDAP database require login?"
 #send "no\r"
