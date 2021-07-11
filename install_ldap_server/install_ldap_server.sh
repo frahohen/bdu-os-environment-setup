@@ -24,8 +24,8 @@ then
     then
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd not installed => do fresh installation
-        su ./install_ldap_server/expect_slapd_install
-        su ./install_ldap_server/expect_libpam_ldapd_install
+        su root ./install_ldap_server/expect_slapd_install
+        su root ./install_ldap_server/expect_libpam_ldapd_install
     else
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd
