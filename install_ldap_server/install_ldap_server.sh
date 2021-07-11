@@ -20,10 +20,12 @@ then
     # slapd not installed => check if libpam-ldapd is installed
     if [ -z "$(LIBPAM_LDAPD_INSTALLED)"]
     then
+        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd not installed => do fresh installation
         ./expect_slapd_install
         ./expect_libpam_ldapd_install
     else
+        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd
         #apt-get remove --auto-remove libpam-ldapd
         #apt-get remove --auto-remove slapd
@@ -32,8 +34,10 @@ else
     # slapd installed => check if libpam-ldapd is installed
     if [ -z "$(LIBPAM_LDAPD_INSTALLED)"]
     then
+        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd not installed => remove package and reinstall slapd and libpam-ldapd
     else
+        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd installed => remove package and reinstall slapd and libpam-ldapd
     fi
 fi
