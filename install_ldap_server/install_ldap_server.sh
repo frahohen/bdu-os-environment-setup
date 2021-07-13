@@ -53,10 +53,15 @@ then
         chmod 644 /etc/pam.d/common-session
         chown root:root /etc/pam.d/common-session
 
+        bash "${LOGGER}" info "${LDAP_SERVER} restart services nslcd and nscd"
         systemctl stop nslcd
         systemctl stop nscd
         systemctl start nscd
         systemctl start nslcd
+
+        bash "${LOGGER}" info "${LDAP_SERVER} Configure admin password for admin(root) user"
+        ldapmodify -H ldapi:// -Y EXTERNAL -f ./install_ldap_server/admin_dit_passwd.ldif
+        ldapmodify -H ldap:// -x -D "cn=admin,dc=ldap,dc=frahohen,dc=at" -W -f ./install_ldap_server/admin_regular_dit_passwd.ldif
     else
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd

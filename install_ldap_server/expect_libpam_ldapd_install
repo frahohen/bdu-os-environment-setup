@@ -5,14 +5,14 @@ spawn su root -c "apt-get install libpam-ldapd -y"
 # ------------------------------------------------
 # --Configuration nslcd---------------------------
 # ------------------------------------------------
-expect "LDAP server URI:"
+expect "LDAP server URI: "
 # LDAP server URI formats:
 #   ldap://<hostname_or_IP_address>:<port>/
 #   ldaps://
 #   ldapi://
 send "ldap://127.0.0.1:389/\n"
 
-expect "LDAP server search base:"
+expect "LDAP server search base: "
 # example:
 #   "example.net" results in "dc=example,dc=net" 
 send "dc=ldap,dc=frahohen,dc=at\n"
@@ -20,7 +20,7 @@ send "dc=ldap,dc=frahohen,dc=at\n"
 # ------------------------------------------------
 # --Configuration libnss-ldapd--------------------
 # ------------------------------------------------
-expect "Name services to configure:"
+expect "Name services to configure: "
 # LDAP lookup options found in /etc/nsswitch.conf
 #   1. passwd
 #   2. group
@@ -35,16 +35,16 @@ expect "Name services to configure:"
 #   11. aliases
 send "1 2 3\n"
 
-#expect "Does the LDAP database require login?"
+#expect "Does the LDAP database require login? "
 #send "no\r"
 
-#expect "LDAP administrative account:"
+#expect "LDAP administrative account: "
 #send "cn=admin,dc=ldap,dc=frahohen,dc=at\r"
 
-#expect "LDAP administrative password:"
+#expect "LDAP administrative password: "
 #send "admin\r"
 
-#expect "Override local changes to /etc/pam.d/common-*?"
+#expect "Override local changes to /etc/pam.d/common-*? "
 #send "yes\r"
 
 expect eof

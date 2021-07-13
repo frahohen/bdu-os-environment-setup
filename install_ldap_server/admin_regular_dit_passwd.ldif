@@ -1,0 +1,4 @@
+dn: cn=admin,dc=ldap,dc=frahohen,dc=at
+changetype: modify
+replace: userPassword
+userPassword: {SSHA}NRytgyT6e/eXr4v2LZuzkVapkcukoReL
