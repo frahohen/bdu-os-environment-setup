@@ -22,10 +22,36 @@ then
     # slapd not installed => check if libpam-ldapd is installed
     if [ -z "${LIBPAM_LDAPD_INSTALLED}"]
     then
-        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
+        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd"
         # libpam-ldapd not installed => do fresh installation
         expect ./install_ldap_server/expect_slapd_install
+
+        bash "${LOGGER}" info "${LDAP_SERVER} Install libpam-ldapd"
         expect ./install_ldap_server/expect_libpam_ldapd_install
+
+        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/nslcd.conf"
+        rm /etc/nslcd.conf
+        cp ./install_ldap_server/resources/etc/nslcd.conf /etc/
+        chmod 640 /etc/nslcd.conf
+        chown root:nslcd /etc/nslcd.conf
+
+        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/nsswitch.conf"
+        rm /etc/nsswitch.conf
+        cp ./install_ldap_server/resources/etc/nsswitch.conf /etc/
+        chmod 644 /etc/nsswitch.conf
+        chown root:root /etc/nsswitch.conf
+
+        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/pam.d/common-auth"
+        rm /etc/pam.d/common-auth
+        cp ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/
+        chmod 644 /etc/pam.d/common-auth
+        chown root:root /etc/pam.d/common-auth
+
+        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/pam.d/common-session"
+        rm /etc/pam.d/common-session
+        cp ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/
+        chmod 644 /etc/pam.d/common-session
+        chown root:root /etc/pam.d/common-session
     else
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd
@@ -43,6 +69,21 @@ else
         # libpam-ldapd installed => remove package and reinstall slapd and libpam-ldapd
     fi
 fi
+
+# TODO: REQUIRED FILES FOR SETUP - START !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:
+# TODO: common-auth might be needed depending if the lam setup works without the 3 lines at the "Primary Block"
+# TODO: common-session check if the session configuration can be changed with dpkg-reconfigure and if this change is needed to successfully execute LAM 
+# TODO: put the sshd configuration file into the install_ssh_server installation and add it only if pam.d folder exists
+# TODO: Copy nslcd.conf with enabled logfile location 
+#    => Reinstall entire current setup and check systemctl status to ensure if nscd and nslcd is running or only nslcd
+#    => Check if stopping with systemctl and starting both services is enough to ensure that these services are running on restart of system 
+#    => or if the services also need to be started
+# TODO: REQUIRED FILES FOR SETUP - END !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# systemctl stop nslcd
+# systemctl stop nscd
+# systemctl start nscd
+# systemctl start nslcd
 
 #bash "${LOGGER}" info "${LDAP_SERVER} Re-index and fetch all available packages"
 #expect ./expect_slapd

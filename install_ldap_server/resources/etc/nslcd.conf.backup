@@ -13,7 +13,9 @@ log /var/log/nslcd.log debug
 uri ldap://127.0.0.1:389/
 
 # The search base that will be used for all queries.
-base dc=ldap,dc=frahohen,dc=at
+base ou=Users,dc=ldap,dc=frahohen,dc=at
+filter	passwd	(objectClass=posixAccount)
+filter  group   (objectClass=posixGroup)
 
 # The LDAP protocol version to use.
 ldap_version 3
