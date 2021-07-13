@@ -29,6 +29,9 @@ then
         bash "${LOGGER}" info "${LDAP_SERVER} Install libpam-ldapd"
         expect ./install_ldap_server/expect_libpam_ldapd_install
 
+        bash "${LOGGER}" info "${LDAP_SERVER} Reconfigure slapd properly"
+        expect ./install_ldap_server/expect_slapd_reconfigure
+
         bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/nslcd.conf"
         rm /etc/nslcd.conf
         cp ./install_ldap_server/resources/etc/nslcd.conf /etc/
@@ -59,9 +62,10 @@ then
         systemctl start nscd
         systemctl start nslcd
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Configure admin password for admin(root) user"
-        ldapmodify -H ldapi:// -Y EXTERNAL -f ./install_ldap_server/admin_dit_passwd.ldif
-        ldapmodify -H ldap:// -x -D "cn=admin,dc=ldap,dc=frahohen,dc=at" -W -f ./install_ldap_server/admin_regular_dit_passwd.ldif
+        #bash "${LOGGER}" info "${LDAP_SERVER} Configure admin password for admin(root) user"
+        #ldapmodify -H ldapi:// -Y EXTERNAL -f ./install_ldap_server/admin_dit_passwd.ldif
+        #ldapmodify -H ldap:// -x -D "cn=admin,dc=ldap,dc=frahohen,dc=at" -W -f ./install_ldap_server/admin_regular_dit_passwd.ldif
+        # TODO: use dpkg-reconfigure slapd to configure LDAP properly
     else
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd

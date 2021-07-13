@@ -1,0 +1,35 @@
+#!/usr/bin/expect
+
+spawn su root -c "dpkg-reconfigure slapd"
+
+expect "Omit OpenLDAP server configuration? "
+send "no\n"
+
+expect "DNS domain name: "
+# for example "foo.example.org" directory "dc=foo, dc=example, dc=org" as base DN will be created
+send "ldap.frahohen.at\n"
+
+expect "Organization name: "
+send "frahohen\n"
+
+expect "Administrator password: "
+send "admin\n"
+
+expect "Confirm password: "
+send "admin\n"
+
+expect "Database backend to use: "
+# Database options:
+#   1. BDB
+#   2. HDB
+#   3. MDB
+send "3\n"
+
+expect "Do you want the database to be removed when slapd is purged? "
+send "no\n"
+
+expect "Move old database? "
+# [Note]: files in /var/lib/ldap can break the configuration process
+send "yes\n"
+
+expect eof
