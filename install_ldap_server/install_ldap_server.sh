@@ -52,6 +52,11 @@ then
         cp ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/
         chmod 644 /etc/pam.d/common-session
         chown root:root /etc/pam.d/common-session
+
+        systemctl stop nslcd
+        systemctl stop nscd
+        systemctl start nscd
+        systemctl start nslcd
     else
         bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
         # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd

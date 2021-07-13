@@ -10,12 +10,12 @@ expect "LDAP server URI:"
 #   ldap://<hostname_or_IP_address>:<port>/
 #   ldaps://
 #   ldapi://
-send "ldap://127.0.0.1:389/\r"
+send "ldap://127.0.0.1:389/\n"
 
 expect "LDAP server search base:"
 # example:
 #   "example.net" results in "dc=example,dc=net" 
-send "dc=ldap,dc=frahohen,dc=at\r"
+send "dc=ldap,dc=frahohen,dc=at\n"
 
 # ------------------------------------------------
 # --Configuration libnss-ldapd--------------------
@@ -33,7 +33,7 @@ expect "Name services to configure:"
 #   9. rpc
 #   10. netgroup
 #   11. aliases
-send "1 2 3\r"
+send "1 2 3\n"
 
 #expect "Does the LDAP database require login?"
 #send "no\r"
@@ -42,7 +42,7 @@ send "1 2 3\r"
 #send "cn=admin,dc=ldap,dc=frahohen,dc=at\r"
 
 #expect "LDAP administrative password:"
-#end "admin\r"
+#send "admin\r"
 
 #expect "Override local changes to /etc/pam.d/common-*?"
 #send "yes\r"
