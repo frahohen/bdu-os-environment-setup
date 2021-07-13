@@ -4,6 +4,9 @@ A basic automated VPS environment setup for Debian 10
 
 Currently included:
 
+* OpenLDAP
+* LDAP Account Manager (LAM)
+* OpenSSH
 * Webmin
 * Docker
 * Docker-Compose
