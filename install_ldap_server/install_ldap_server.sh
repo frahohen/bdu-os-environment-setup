@@ -1,6 +1,7 @@
 #!/bin/bash
 # General
 LOGGER="./utils/print_log.sh"
+FILE_UTILS="./utils/file_utils.sh"
 LDAP_SERVER="LDAP Server -"
 
 # change input windows to normal text line inputs
@@ -13,76 +14,68 @@ apt-get update -y
 bash "${LOGGER}" info "${LDAP_SERVER} Install expect scripting language"
 apt-get install expect -y
 
-bash "${LOGGER}" info "${LDAP_SERVER} Check if slapd and libpam-ldapd are installed"
-SLAPD_INSTALLED=$(dpkg -l | grep slapd)
-LIBPAM_LDAPD_INSTALLED=$(dpkg -l | grep libpam-ldapd)
+bash "${LOGGER}" info "${LDAP_SERVER} Install slapd"
+# libpam-ldapd not installed => do fresh installation
+expect ./install_ldap_server/expect_slapd_install
 
-if [ -z "${SLAPD_INSTALLED}"]
-then 
-    # slapd not installed => check if libpam-ldapd is installed
-    if [ -z "${LIBPAM_LDAPD_INSTALLED}"]
-    then
-        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd"
-        # libpam-ldapd not installed => do fresh installation
-        expect ./install_ldap_server/expect_slapd_install
+bash "${LOGGER}" info "${LDAP_SERVER} Install libpam-ldapd"
+expect ./install_ldap_server/expect_libpam_ldapd_install
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Install libpam-ldapd"
-        expect ./install_ldap_server/expect_libpam_ldapd_install
+bash "${LOGGER}" info "${LDAP_SERVER} Reconfigure slapd properly"
+expect ./install_ldap_server/expect_slapd_reconfigure
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Reconfigure slapd properly"
-        expect ./install_ldap_server/expect_slapd_reconfigure
+#bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/nslcd.conf"
+source $(FILE_UTILS)
+replace_file root nslcd 640 ./install_ldap_server/resources/etc/nslcd.conf /etc/nslcd.conf
+#rm /etc/nslcd.conf
+#cp ./install_ldap_server/resources/etc/nslcd.conf /etc/
+#chmod 640 /etc/nslcd.conf
+#chown root:nslcd /etc/nslcd.conf
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/nslcd.conf"
-        rm /etc/nslcd.conf
-        cp ./install_ldap_server/resources/etc/nslcd.conf /etc/
-        chmod 640 /etc/nslcd.conf
-        chown root:nslcd /etc/nslcd.conf
+#bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/nsswitch.conf"
+#source $(FILE_UTILS)
+replace_file root root 644 ./install_ldap_server/resources/etc/nsswitch.conf /etc/nsswitch.conf
+#rm /etc/nsswitch.conf
+#cp ./install_ldap_server/resources/etc/nsswitch.conf /etc/
+#chmod 644 /etc/nsswitch.conf
+#chown root:root /etc/nsswitch.conf
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/nsswitch.conf"
-        rm /etc/nsswitch.conf
-        cp ./install_ldap_server/resources/etc/nsswitch.conf /etc/
-        chmod 644 /etc/nsswitch.conf
-        chown root:root /etc/nsswitch.conf
+#bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/pam.d/common-auth"
+#source $(FILE_UTILS)
+replace_file root root 644 ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/common-auth
+#rm /etc/pam.d/common-auth
+#cp ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/
+#chmod 644 /etc/pam.d/common-auth
+#chown root:root /etc/pam.d/common-auth
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/pam.d/common-auth"
-        rm /etc/pam.d/common-auth
-        cp ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/
-        chmod 644 /etc/pam.d/common-auth
-        chown root:root /etc/pam.d/common-auth
+#bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/pam.d/common-session"
+#source $(FILE_UTILS)
+replace_file root root 644 ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/common-session
+#rm /etc/pam.d/common-session
+#cp ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/
+#chmod 644 /etc/pam.d/common-session
+#chown root:root /etc/pam.d/common-session
 
-        bash "${LOGGER}" info "${LDAP_SERVER} Modify /etc/pam.d/common-session"
-        rm /etc/pam.d/common-session
-        cp ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/
-        chmod 644 /etc/pam.d/common-session
-        chown root:root /etc/pam.d/common-session
+bash "${LOGGER}" info "${LDAP_SERVER} Restart services nslcd and nscd"
+systemctl stop nslcd
+systemctl stop nscd
+systemctl start nscd
+systemctl start nslcd
 
-        bash "${LOGGER}" info "${LDAP_SERVER} restart services nslcd and nscd"
-        systemctl stop nslcd
-        systemctl stop nscd
-        systemctl start nscd
-        systemctl start nslcd
+#bash "${LOGGER}" info "${LDAP_SERVER} Configure admin password for admin(root) user"
+#ldapmodify -H ldapi:// -Y EXTERNAL -f ./install_ldap_server/admin_dit_passwd.ldif
+#ldapmodify -H ldap:// -x -D "cn=admin,dc=ldap,dc=frahohen,dc=at" -W -f ./install_ldap_server/admin_regular_dit_passwd.ldif
+# TODO: use dpkg-reconfigure slapd to configure LDAP properly
 
-        #bash "${LOGGER}" info "${LDAP_SERVER} Configure admin password for admin(root) user"
-        #ldapmodify -H ldapi:// -Y EXTERNAL -f ./install_ldap_server/admin_dit_passwd.ldif
-        #ldapmodify -H ldap:// -x -D "cn=admin,dc=ldap,dc=frahohen,dc=at" -W -f ./install_ldap_server/admin_regular_dit_passwd.ldif
-        # TODO: use dpkg-reconfigure slapd to configure LDAP properly
-    else
-        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
-        # libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd
-        #apt-get remove --auto-remove libpam-ldapd
-        #apt-get remove --auto-remove slapd
-    fi
-else
-    # slapd installed => check if libpam-ldapd is installed
-    if [ -z "${LIBPAM_LDAPD_INSTALLED}"]
-    then
-        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
-        # libpam-ldapd not installed => remove package and reinstall slapd and libpam-ldapd
-    else
-        bash "${LOGGER}" info "${LDAP_SERVER} Install slapd and libpam-ldapd"
-        # libpam-ldapd installed => remove package and reinstall slapd and libpam-ldapd
-    fi
-fi
+# libpam-ldapd is installed => remove package and reinstall slapd and libpam-ldapd
+#apt-get remove --auto-remove libpam-ldapd
+#apt-get remove --auto-remove slapd
+
+# slapd installed => check if libpam-ldapd is installed
+
+# libpam-ldapd not installed => remove package and reinstall slapd and libpam-ldapd
+
+# libpam-ldapd installed => remove package and reinstall slapd and libpam-ldapd
 
 # TODO: REQUIRED FILES FOR SETUP - START !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:
 # TODO: common-auth might be needed depending if the lam setup works without the 3 lines at the "Primary Block"
