@@ -13,7 +13,7 @@ function get_absolute_path() {
     printf "${FILE_UTILS_PATH//${RELATIVE_PATH_TARGET_FOLDER}}${RELATIVE_PATH_UTIL_SCRIPT}\n"
 }
 
-LOGGER=$(get_absolute_path utils utils/print_log.sh)
+LOGGER="./utils/print_log.sh" # currently the script that calls a function decides the absolute path
 FILE_UTILS="File Utils -"
 
 function replace_file() {
