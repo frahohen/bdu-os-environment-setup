@@ -2,17 +2,18 @@
 
 # retrieves the absolute path of the script path from the root directory provided
 # example:
-#   example root directory:                                                                                             ./test_project/
-#   file utils path must be for this example:                                                                           ./test_project/utils/file_utils.sh
-#   example absolute path calculated from file_utils.sh:                                                                /home/dev/test_project/
-#   example absolute path calculated if path parameter some_folder/some_script.sh provided for get_absolute_path():   /home/dev/test_project/some_folder/some_script.sh
+#   root directory:                         ./test_project/
+#   relative path of target script folder:  ./test_project/some_folder/ => some_folder
+#   realtive path of util script:           ./test_project/utils/print_log.sh => utils/print_log.sh
+#   absolute path calculated:               /home/dev/test_project/
 function get_absolute_path() {
-    local RELATIVE_SCRIPT_PATH_FROM_ROOT_DIRECTORY=$1
+    local RELATIVE_PATH_TARGET_FOLDER=$1
+    local RELATIVE_PATH_UTIL_SCRIPT=$2
     local FILE_UTILS_PATH=$(dirname $(realpath "$0"))
-    printf "${FILE_UTILS_PATH//utils}${RELATIVE_SCRIPT_PATH_FROM_ROOT_DIRECTORY}\n"
+    printf "${FILE_UTILS_PATH//${RELATIVE_PATH_TARGET_FOLDER}}${RELATIVE_PATH_UTIL_SCRIPT}\n"
 }
 
-LOGGER=$(get_absolute_path utils/print_log.sh)
+LOGGER=$(get_absolute_path utils utils/print_log.sh)
 FILE_UTILS="File Utils -"
 
 function replace_file() {
@@ -22,7 +23,7 @@ function replace_file() {
     local SOURCE_PATH=$4
     local DESTINATION_PATH=$5
 
-    bash "${LOGGER}" info "${FILE_UTILS} Replace ${destination_path}"
+    bash "${LOGGER}" info "${FILE_UTILS} Replace ${DESTINATION_PATH}"
 
     rm ${DESTINATION_PATH}
     cp ${SOURCE_PATH} ${DESTINATION_PATH}

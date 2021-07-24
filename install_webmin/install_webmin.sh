@@ -1,7 +1,7 @@
 #!/bin/bash
 # General
 FILE_UTILS="./utils/file_utils.sh"
-LOGGER=$(source ${FILE_UTILS} get_absolute_path /utils/print_log.sh)
+LOGGER=$(source ${FILE_UTILS} get_absolute_path install_webmin /utils/print_log.sh)
 WEBMIN="Webmin -"
 
 # Repository
