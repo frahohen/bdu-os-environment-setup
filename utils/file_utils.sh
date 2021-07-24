@@ -5,7 +5,7 @@
 #   example root directory:                                                                                             ./test_project/
 #   file utils path must be for this example:                                                                           ./test_project/utils/file_utils.sh
 #   example absolute path calculated from file_utils.sh:                                                                /home/dev/test_project/
-#   example absolute path calculated if path parameter "some_folder/some_script.sh" provided for get_absolute_path():   /home/dev/test_project/some_folder/some_script.sh
+#   example absolute path calculated if path parameter some_folder/some_script.sh provided for get_absolute_path():   /home/dev/test_project/some_folder/some_script.sh
 function get_absolute_path() {
     local RELATIVE_SCRIPT_PATH_FROM_ROOT_DIRECTORY=$1
     local FILE_UTILS_PATH=$(dirname $(realpath "$0"))
@@ -27,12 +27,12 @@ function replace_file() {
     rm ${DESTINATION_PATH}
     cp ${SOURCE_PATH} ${DESTINATION_PATH}
     chmod ${RIGHTS} ${DESTINATION_PATH}
-    chown ${USER}:${GROUP) ${DESTINATION_PATH}
+    chown ${USER}:${GROUP} ${DESTINATION_PATH}
 }
 
 # --- add functions here ---
 
-case $1 in 
-    get_absolute_path) "$@"; exit;; 
+case $1 in
+    get_absolute_path) "$@"; exit;;
     replace_file) "$@"; exit;;
 esac

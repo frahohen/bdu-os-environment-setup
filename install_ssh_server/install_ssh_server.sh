@@ -14,7 +14,7 @@ bash "${LOGGER}" info "${SSHSERVER} Install SSH server"
 expect ./install_ssh_server/expect_openssh_server
 
 #bash "${LOGGER}" info "${SSHSERVER} Modify /etc/ssh/ssh_config"
-source $(FILE_UTILS) replace_file root root 644 ./install_ssh_server/resources/etc/ssh/ssh_config /etc/ssh/ssh_config
+source ${FILE_UTILS} replace_file root root 644 ./install_ssh_server/resources/etc/ssh/ssh_config /etc/ssh/ssh_config
 #rm /etc/ssh/ssh_config
 #cp ./install_ssh_server/resources/etc/ssh/ssh_config /etc/ssh/
 #chmod 644 /etc/ssh/ssh_config
@@ -22,7 +22,7 @@ source $(FILE_UTILS) replace_file root root 644 ./install_ssh_server/resources/e
 
 #bash "${LOGGER}" info "${SSHSERVER} Modify /etc/ssh/sshd_config"
 #source $(FILE_UTILS)
-source $(FILE_UTILS) replace_file root root 644 ./install_ssh_server/resources/etc/ssh/sshd_config /etc/ssh/sshd_config
+source ${FILE_UTILS} replace_file root root 644 ./install_ssh_server/resources/etc/ssh/sshd_config /etc/ssh/sshd_config
 #rm /etc/ssh/sshd_config
 #cp ./install_ssh_server/resources/etc/ssh/sshd_config /etc/ssh/
 #chmod 644 /etc/ssh/sshd_config
