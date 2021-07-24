@@ -1,6 +1,7 @@
 #!/bin/bash
 # General
-LOGGER="./utils/print_log.sh"
+FILE_UTILS="./utils/file_utils.sh"
+LOGGER=$(source ${FILE_UTILS} get_absolute_path /utils/print_log.sh)
 WEBMIN="Firewall -"
 
 # TODO: check if ufw is needed => if not needed only apply firewall configuration here to ensure only the required ports are ALLOWED

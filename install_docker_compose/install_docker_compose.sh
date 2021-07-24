@@ -1,6 +1,7 @@
 #!/bin/bash
 # General
-LOGGER="./utils/print_log.sh"
+FILE_UTILS="./utils/file_utils.sh"
+LOGGER=$(source ${FILE_UTILS} get_absolute_path /utils/print_log.sh)
 DOCKER="Docker-Compose -"
 
 bash "${LOGGER_UTIL}" info "${DOCKER} Install docker-compose"

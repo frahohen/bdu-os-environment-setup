@@ -1,6 +1,7 @@
 #!/bin/bash
 # General
-LOGGER="./utils/print_log.sh"
+FILE_UTILS="./utils/file_utils.sh"
+LOGGER=$(source ${FILE_UTILS} get_absolute_path /utils/print_log.sh)
 DOCKER="Docker -"
 
 bash "${LOGGER}" info "${DOCKER} Re-index and fetch all available packages"

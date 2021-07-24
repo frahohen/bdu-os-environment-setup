@@ -1,7 +1,7 @@
 #!/bin/bash
 # General
-LOGGER="./utils/print_log.sh"
 FILE_UTILS="./utils/file_utils.sh"
+LOGGER=$(source ${FILE_UTILS} get_absolute_path /utils/print_log.sh)
 LDAP_SERVER="LDAP Server -"
 
 # change input windows to normal text line inputs
@@ -25,32 +25,28 @@ bash "${LOGGER}" info "${LDAP_SERVER} Reconfigure slapd properly"
 expect ./install_ldap_server/expect_slapd_reconfigure
 
 #bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/nslcd.conf"
-source $(FILE_UTILS)
-replace_file root nslcd 640 ./install_ldap_server/resources/etc/nslcd.conf /etc/nslcd.conf
+source $(FILE_UTILS) replace_file root nslcd 640 ./install_ldap_server/resources/etc/nslcd.conf /etc/nslcd.conf
 #rm /etc/nslcd.conf
 #cp ./install_ldap_server/resources/etc/nslcd.conf /etc/
 #chmod 640 /etc/nslcd.conf
 #chown root:nslcd /etc/nslcd.conf
 
 #bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/nsswitch.conf"
-#source $(FILE_UTILS)
-replace_file root root 644 ./install_ldap_server/resources/etc/nsswitch.conf /etc/nsswitch.conf
+source $(FILE_UTILS) replace_file root root 644 ./install_ldap_server/resources/etc/nsswitch.conf /etc/nsswitch.conf
 #rm /etc/nsswitch.conf
 #cp ./install_ldap_server/resources/etc/nsswitch.conf /etc/
 #chmod 644 /etc/nsswitch.conf
 #chown root:root /etc/nsswitch.conf
 
 #bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/pam.d/common-auth"
-#source $(FILE_UTILS)
-replace_file root root 644 ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/common-auth
+source $(FILE_UTILS) replace_file root root 644 ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/common-auth
 #rm /etc/pam.d/common-auth
 #cp ./install_ldap_server/resources/etc/pam.d/common-auth /etc/pam.d/
 #chmod 644 /etc/pam.d/common-auth
 #chown root:root /etc/pam.d/common-auth
 
 #bash "${LOGGER}" info "${LDAP_SERVER} Replace /etc/pam.d/common-session"
-#source $(FILE_UTILS)
-replace_file root root 644 ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/common-session
+source $(FILE_UTILS) replace_file root root 644 ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/common-session
 #rm /etc/pam.d/common-session
 #cp ./install_ldap_server/resources/etc/pam.d/common-session /etc/pam.d/
 #chmod 644 /etc/pam.d/common-session
